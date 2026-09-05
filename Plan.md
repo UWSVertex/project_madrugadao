@@ -71,10 +71,10 @@ Check off each item as it is completed.
 
 ## Phase 7 — Deployment (Render, matching reference site)
 - [x] Add `gunicorn` + `whitenoise` for static file serving in production
-- [ ] Configure `ALLOWED_HOSTS`, `CSRF_TRUSTED_ORIGINS` for `.onrender.com` domain
-- [ ] Set `DEBUG=False` and secure `SECRET_KEY` via environment variable
-- [ ] Add `render.yaml` or configure Render web service (build/start commands)
-- [ ] Configure persistent/production database if needed (Render Postgres) or keep SQLite for MVP
+- [x] Configure `ALLOWED_HOSTS`, `CSRF_TRUSTED_ORIGINS` for `.onrender.com` domain
+- [x] Set `DEBUG=False` and secure `SECRET_KEY` via environment variable
+- [x] Add `render.yaml` or configure Render web service (build/start commands)
+- [x] Configure persistent/production database if needed (Render Postgres) or keep SQLite for MVP
 - [ ] Set up media file storage strategy (Render disk or external storage, since SQLite/local media is ephemeral on free tier)
 - [ ] Deploy and verify live site + `/admin/` login works
 - [ ] Create production superuser on deployed instance
