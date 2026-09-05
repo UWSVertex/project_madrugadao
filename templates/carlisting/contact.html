@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Contact | Car Sales{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <h1 class="mb-4">Contact Us</h1>
+    <div class="row g-4">
+        <div class="col-md-6">
+            <p><i class="bi bi-geo-alt"></i> 123 Main Street, Your City</p>
+            <p><i class="bi bi-telephone"></i> (555) 123-4567</p>
+            <p><i class="bi bi-clock"></i> Mon-Sat 8:00 AM - 6:00 PM</p>
+        </div>
+        <div class="col-md-6">
+            <form method="post">
+                {% csrf_token %}
+                {{ form.car }}
+                <div class="mb-3">{{ form.name }}</div>
+                <div class="mb-3">{{ form.phone }}</div>
+                <div class="mb-3">{{ form.email }}</div>
+                <div class="mb-3">{{ form.message }}</div>
+                <button type="submit" class="btn btn-dark">Send Message</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

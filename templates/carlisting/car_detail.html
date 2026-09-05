@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block title %}{{ car }} | Car Sales{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row g-4">
+        <div class="col-md-6">
+            {% if car.images.all %}
+            <div id="carCarousel" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    {% for image in car.images.all %}
+                    <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                        <img src="{{ image.image.url }}" class="d-block w-100" style="height:400px;object-fit:cover;" alt="{{ car }}">
+                    </div>
+                    {% endfor %}
+                </div>
+                {% if car.images.all|length > 1 %}
+                <button class="carousel-control-prev" type="button" data-bs-target="#carCarousel" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon"></span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carCarousel" data-bs-slide="next">
+                    <span class="carousel-control-next-icon"></span>
+                </button>
+                {% endif %}
+            </div>
+            {% else %}
+            <div class="bg-secondary text-white d-flex align-items-center justify-content-center" style="height:400px;">No Image</div>
+            {% endif %}
+        </div>
+        <div class="col-md-6">
+            <h1>{{ car }}</h1>
+            <p class="fs-3 text-success fw-bold">${{ car.price|floatformat:0 }}</p>
+            <ul class="list-group list-group-flush mb-4">
+                <li class="list-group-item"><strong>Mileage:</strong> {{ car.mileage }} km</li>
+                <li class="list-group-item"><strong>Fuel:</strong> {{ car.get_fuel_type_display }}</li>
+                <li class="list-group-item"><strong>Transmission:</strong> {{ car.get_transmission_display }}</li>
+                <li class="list-group-item"><strong>Body Type:</strong> {{ car.get_body_type_display }}</li>
+                {% if car.color %}<li class="list-group-item"><strong>Color:</strong> {{ car.color }}</li>{% endif %}
+            </ul>
+            {% if car.description %}
+            <p>{{ car.description|linebreaks }}</p>
+            {% endif %}
+
+            <h4 class="mt-4">Interested in this car?</h4>
+            <form method="post">
+                {% csrf_token %}
+                {{ form.car }}
+                <div class="mb-3">{{ form.name }}</div>
+                <div class="mb-3">{{ form.phone }}</div>
+                <div class="mb-3">{{ form.email }}</div>
+                <div class="mb-3">{{ form.message }}</div>
+                <button type="submit" class="btn btn-dark">Send Inquiry</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
