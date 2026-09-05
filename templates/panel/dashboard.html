@@ -1,0 +1,108 @@
+{% extends "panel/base.html" %}
+{% block title %}Dashboard | Panel Autos MYR{% endblock %}
+{% block page_title %}Dashboard{% endblock %}
+
+{% block panel_content %}
+<div class="row g-3 mb-4">
+    <div class="col-md-3">
+        <div class="panel-stat-card d-flex justify-content-between align-items-center">
+            <div>
+                <div class="stat-value">{{ total_cars }}</div>
+                <div class="small text-muted">Vehículos totales</div>
+            </div>
+            <span class="stat-icon"><i class="bi bi-car-front"></i></span>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="panel-stat-card d-flex justify-content-between align-items-center">
+            <div>
+                <div class="stat-value">{{ available_cars }}</div>
+                <div class="small text-muted">Disponibles</div>
+            </div>
+            <span class="stat-icon"><i class="bi bi-check-circle"></i></span>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="panel-stat-card d-flex justify-content-between align-items-center">
+            <div>
+                <div class="stat-value">{{ featured_cars }}</div>
+                <div class="small text-muted">Destacados</div>
+            </div>
+            <span class="stat-icon"><i class="bi bi-star"></i></span>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="panel-stat-card d-flex justify-content-between align-items-center">
+            <div>
+                <div class="stat-value">{{ new_inquiries }}</div>
+                <div class="small text-muted">Consultas nuevas</div>
+            </div>
+            <span class="stat-icon"><i class="bi bi-chat-dots"></i></span>
+        </div>
+    </div>
+</div>
+
+<div class="row g-4">
+    <div class="col-lg-7">
+        <div class="panel-table-card p-3">
+            <div class="d-flex justify-content-between align-items-center mb-2 px-2 pt-1">
+                <h6 class="fw-bold mb-0">Vehículos recientes</h6>
+                <a href="{% url 'panel:car_list' %}" class="small text-decoration-none">Ver todos</a>
+            </div>
+            <table class="table align-middle mb-0">
+                <tbody>
+                    {% for car in recent_cars %}
+                    <tr>
+                        <td style="width:64px;">
+                            {% if car.primary_image %}
+                            <img src="{{ car.primary_image.image.url }}" class="thumb-sm" alt="{{ car }}">
+                            {% else %}
+                            <div class="thumb-sm d-flex align-items-center justify-content-center text-muted"><i class="bi bi-car-front"></i></div>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <div class="fw-bold">{{ car }}</div>
+                            <div class="small text-muted">${{ car.price|floatformat:0 }}</div>
+                        </td>
+                        <td class="text-end">
+                            <a href="{% url 'panel:car_edit' car.pk %}" class="btn btn-sm btn-outline-dark">Editar</a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr><td class="text-muted py-3">Todavía no hay vehículos.</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="col-lg-5">
+        <div class="panel-table-card p-3">
+            <div class="d-flex justify-content-between align-items-center mb-2 px-2 pt-1">
+                <h6 class="fw-bold mb-0">Consultas recientes</h6>
+                <a href="{% url 'panel:inquiry_list' %}" class="small text-decoration-none">Ver todas</a>
+            </div>
+            <table class="table align-middle mb-0">
+                <tbody>
+                    {% for inquiry in recent_inquiries %}
+                    <tr>
+                        <td>
+                            <div class="fw-bold">{{ inquiry.name }}</div>
+                            <div class="small text-muted">{{ inquiry.car|default:"Consulta general" }}</div>
+                        </td>
+                        <td class="text-end">
+                            {% if inquiry.is_resolved %}
+                            <span class="badge bg-success">Resuelta</span>
+                            {% else %}
+                            <span class="badge badge-myr">Nueva</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr><td class="text-muted py-3">No hay consultas todavía.</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

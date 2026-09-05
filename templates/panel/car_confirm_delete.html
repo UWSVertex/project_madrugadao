@@ -1,0 +1,15 @@
+{% extends "panel/base.html" %}
+{% block title %}Eliminar vehículo | Panel Autos MYR{% endblock %}
+{% block page_title %}Eliminar vehículo{% endblock %}
+
+{% block panel_content %}
+<div class="panel-table-card p-4" style="max-width:520px;">
+    <h5 class="fw-bold mb-3">¿Eliminar "{{ car }}"?</h5>
+    <p class="text-muted">Esta acción no se puede deshacer. El vehículo y sus fotos serán eliminados permanentemente del inventario.</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger"><i class="bi bi-trash"></i> Sí, eliminar</button>
+        <a href="{% url 'panel:car_list' %}" class="btn btn-outline-secondary">Cancelar</a>
+    </form>
+</div>
+{% endblock %}

@@ -143,6 +143,10 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+LOGIN_URL = 'panel:login'
+LOGIN_REDIRECT_URL = 'panel:dashboard'
+LOGOUT_REDIRECT_URL = 'panel:login'
+
 # Security settings for production (Render)
 if not DEBUG:
     SECURE_SSL_REDIRECT = os.environ.get('SECURE_SSL_REDIRECT', 'True') == 'True'

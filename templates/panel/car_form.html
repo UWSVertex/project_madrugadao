@@ -1,0 +1,118 @@
+{% extends "panel/base.html" %}
+{% block title %}{% if is_new %}Nuevo vehículo{% else %}Editar vehículo{% endif %} | Panel Autos MYR{% endblock %}
+{% block page_title %}{% if is_new %}Nuevo vehículo{% else %}Editar vehículo{% endif %}{% endblock %}
+
+{% block panel_content %}
+<a href="{% url 'panel:car_list' %}" class="text-decoration-none text-muted small d-inline-block mb-3">
+    <i class="bi bi-arrow-left"></i> Volver al inventario
+</a>
+
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="row g-4">
+        <div class="col-lg-8">
+            <div class="panel-table-card p-4 mb-4">
+                <h6 class="fw-bold mb-3">Información del vehículo</h6>
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label class="form-label small fw-bold">Marca</label>
+                        {{ form.brand }}
+                        {{ form.brand.errors }}
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label small fw-bold">Modelo</label>
+                        {{ form.model_name }}
+                        {{ form.model_name.errors }}
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label small fw-bold">Año</label>
+                        {{ form.year }}
+                        {{ form.year.errors }}
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label small fw-bold">Precio (USD)</label>
+                        {{ form.price }}
+                        {{ form.price.errors }}
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label small fw-bold">Kilometraje</label>
+                        {{ form.mileage }}
+                        {{ form.mileage.errors }}
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label small fw-bold">Combustible</label>
+                        {{ form.fuel_type }}
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label small fw-bold">Transmisión</label>
+                        {{ form.transmission }}
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label small fw-bold">Categoría</label>
+                        {{ form.body_type }}
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label small fw-bold">Color</label>
+                        {{ form.color }}
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label small fw-bold">Descripción</label>
+                        {{ form.description }}
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-check">
+                            {{ form.is_available }}
+                            <label class="form-check-label" for="{{ form.is_available.id_for_label }}">Disponible</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-check">
+                            {{ form.is_featured }}
+                            <label class="form-check-label" for="{{ form.is_featured.id_for_label }}">Destacado en inicio</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel-table-card p-4">
+                <h6 class="fw-bold mb-3">Fotos del vehículo</h6>
+                {{ formset.management_form }}
+                <div class="row g-3">
+                    {% for image_form in formset %}
+                    <div class="col-md-4">
+                        <div class="border rounded-3 p-3 h-100">
+                            {% if image_form.instance.pk and image_form.instance.image %}
+                            <img src="{{ image_form.instance.image.url }}" class="w-100 rounded-2 mb-2" style="height:120px;object-fit:cover;">
+                            {% endif %}
+                            {{ image_form.id }}
+                            {{ image_form.image }}
+                            <div class="form-check mt-2">
+                                {{ image_form.is_primary }}
+                                <label class="form-check-label small" for="{{ image_form.is_primary.id_for_label }}">Foto principal</label>
+                            </div>
+                            {% if image_form.instance.pk %}
+                            <div class="form-check mt-1">
+                                {{ image_form.DELETE }}
+                                <label class="form-check-label small text-danger" for="{{ image_form.DELETE.id_for_label }}">Eliminar</label>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="panel-table-card p-4">
+                <h6 class="fw-bold mb-3">Publicar</h6>
+                <p class="small text-muted">Revisá la información antes de guardar el vehículo en el inventario público.</p>
+                <button type="submit" class="btn btn-myr-yellow w-100 mb-2">
+                    <i class="bi bi-check-lg"></i> {% if is_new %}Publicar vehículo{% else %}Guardar cambios{% endif %}
+                </button>
+                <a href="{% url 'panel:car_list' %}" class="btn btn-outline-secondary w-100">Cancelar</a>
+            </div>
+        </div>
+    </div>
+</form>
+{% endblock %}

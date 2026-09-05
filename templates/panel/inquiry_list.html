@@ -1,0 +1,70 @@
+{% extends "panel/base.html" %}
+{% block title %}Consultas | Panel Autos MYR{% endblock %}
+{% block page_title %}Consultas de clientes{% endblock %}
+
+{% block panel_content %}
+<div class="d-flex gap-2 mb-3">
+    <a href="{% url 'panel:inquiry_list' %}" class="btn btn-sm {% if not status %}btn-dark{% else %}btn-outline-dark{% endif %}">Todas</a>
+    <a href="{% url 'panel:inquiry_list' %}?status=open" class="btn btn-sm {% if status == 'open' %}btn-dark{% else %}btn-outline-dark{% endif %}">Nuevas</a>
+    <a href="{% url 'panel:inquiry_list' %}?status=resolved" class="btn btn-sm {% if status == 'resolved' %}btn-dark{% else %}btn-outline-dark{% endif %}">Resueltas</a>
+</div>
+
+<div class="panel-table-card p-3">
+    <table class="table align-middle mb-0">
+        <thead>
+            <tr class="text-muted small text-uppercase">
+                <th>Cliente</th>
+                <th>Vehículo</th>
+                <th>Mensaje</th>
+                <th>Fecha</th>
+                <th>Estado</th>
+                <th class="text-end">Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for inquiry in page_obj %}
+            <tr>
+                <td>
+                    <div class="fw-bold">{{ inquiry.name }}</div>
+                    <div class="small text-muted">{{ inquiry.phone }}{% if inquiry.email %} &middot; {{ inquiry.email }}{% endif %}</div>
+                </td>
+                <td>{{ inquiry.car|default:"Consulta general" }}</td>
+                <td class="small" style="max-width:280px;">{{ inquiry.message|truncatewords:15 }}</td>
+                <td class="small text-muted">{{ inquiry.created_at|date:"d M Y" }}</td>
+                <td>
+                    {% if inquiry.is_resolved %}
+                    <span class="badge bg-success">Resuelta</span>
+                    {% else %}
+                    <span class="badge badge-myr">Nueva</span>
+                    {% endif %}
+                </td>
+                <td class="text-end">
+                    <form method="post" action="{% url 'panel:inquiry_toggle' inquiry.pk %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-sm btn-outline-dark">
+                            {% if inquiry.is_resolved %}Reabrir{% else %}Marcar resuelta{% endif %}
+                        </button>
+                    </form>
+                </td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="6" class="text-center text-muted py-4">No hay consultas.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% if page_obj.has_other_pages %}
+<nav class="mt-4">
+    <ul class="pagination justify-content-center">
+        {% if page_obj.has_previous %}
+        <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}&status={{ status }}">Anterior</a></li>
+        {% endif %}
+        <li class="page-item disabled"><span class="page-link">Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}</span></li>
+        {% if page_obj.has_next %}
+        <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}&status={{ status }}">Siguiente</a></li>
+        {% endif %}
+    </ul>
+</nav>
+{% endif %}
+{% endblock %}
