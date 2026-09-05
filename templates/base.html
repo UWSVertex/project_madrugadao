@@ -39,9 +39,6 @@
                     <li class="nav-item"><a class="nav-link" href="{% url 'carlisting:home' %}">Inicio</a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'carlisting:car_list' %}">Inventario</a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'carlisting:contact' %}">Contacto</a></li>
-                    {% if user.is_authenticated and user.is_staff %}
-                    <li class="nav-item"><a class="nav-link" href="{% url 'panel:dashboard' %}">Panel</a></li>
-                    {% endif %}
                     <li class="nav-item mt-2 mt-lg-0">
                         <a class="btn btn-myr-yellow" href="https://wa.me/50622271818" target="_blank" rel="noopener">
                             <i class="bi bi-whatsapp"></i> WhatsApp
