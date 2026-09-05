@@ -14,7 +14,7 @@ Check off each item as it is completed.
 ## Phase 0 — Environment & Project Setup
 - [x] Confirm `djangoDev` conda env has Django 6.0.8, Pillow installed (verified: yes)
 - [ ] Add `crispy-forms` / `crispy-bootstrap5` (optional, for nicer admin-facing forms) or skip and use plain Bootstrap forms
-- [x] Create `requirements.txt` (django, pillow, gunicorn, whitenoise, python-dotenv, dj-database-url) for Render deployment
+- [x] Create `requirements.txt` (django, pillow, python-dotenv) for local development
 - [x] Add `carlisting` to `INSTALLED_APPS` in `mrcards/settings.py`
 - [x] Configure `TEMPLATES['DIRS']` to project-level `templates/` folder
 - [x] Configure `STATICFILES_DIRS` for project-level `static/` folder (css/js/images)
@@ -69,15 +69,8 @@ Check off each item as it is completed.
 - [ ] Manually test full public flow: browse, filter, view detail, submit inquiry
 - [x] Run `python manage.py check` and fix warnings
 
-## Phase 7 — Deployment (Render, matching reference site)
-- [x] Add `gunicorn` + `whitenoise` for static file serving in production
-- [x] Configure `ALLOWED_HOSTS`, `CSRF_TRUSTED_ORIGINS` for `.onrender.com` domain
-- [x] Set `DEBUG=False` and secure `SECRET_KEY` via environment variable
-- [x] Add `render.yaml` or configure Render web service (build/start commands)
-- [x] Configure persistent/production database if needed (Render Postgres) or keep SQLite for MVP
-- [ ] Set up media file storage strategy (Render disk or external storage, since SQLite/local media is ephemeral on free tier)
-- [ ] Deploy and verify live site + `/admin/` login works
-- [ ] Create production superuser on deployed instance
+## Phase 7 — Deployment
+- [x] Not deploying to Render — this project runs locally only (reference site was used for design inspiration, not as a deployment target)
 
 ## Phase 8 — Polish & Launch
 - [ ] SEO basics: meta tags, page titles, descriptions (mirroring reference site's approach)
