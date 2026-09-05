@@ -1,38 +1,180 @@
 {% extends "base.html" %}
-{% load static %}
-{% block title %}Home | Car Sales{% endblock %}
+{% block title %}Autos MYR — Vehículos usados en San Sebastián{% endblock %}
 
 {% block content %}
-<section class="hero bg-dark text-white text-center py-5">
+<section class="hero">
     <div class="container py-5">
-        <h1 class="display-4 fw-bold">Find Your Next Car Today</h1>
-        <p class="lead">Quality used vehicles, inspected and ready to drive.</p>
-        <a href="{% url 'carlisting:car_list' %}" class="btn btn-warning btn-lg mt-3">Browse Inventory</a>
+        <div class="row align-items-center py-4">
+            <div class="col-lg-8">
+                <p class="hero__eyebrow">MÁS DE 15 AÑOS EN EL MERCADO</p>
+                <h1 class="mb-3">Tu próximo carro <span class="highlight">sí es posible.</span></h1>
+                <p class="lead text-white-50 mb-4" style="max-width:560px;">
+                    Explorá los vehículos disponibles, consultá opciones de financiamiento
+                    y hablá directamente con un asesor.
+                </p>
+                <div class="d-flex gap-3 flex-wrap">
+                    <a href="{% url 'carlisting:car_list' %}" class="btn btn-myr-yellow btn-lg">
+                        Ver inventario <i class="bi bi-arrow-right"></i>
+                    </a>
+                    <a href="https://wa.me/50622271818" target="_blank" rel="noopener" class="btn btn-outline-light btn-lg">
+                        <i class="bi bi-whatsapp"></i> WhatsApp
+                    </a>
+                </div>
+                <div class="d-flex gap-4 flex-wrap mt-4 small text-white-50">
+                    <span><i class="bi bi-patch-check text-warning"></i> Trayectoria</span>
+                    <span><i class="bi bi-credit-card text-warning"></i> Financiamiento</span>
+                    <span><i class="bi bi-car-front text-warning"></i> Inventario actualizado</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container" style="margin-bottom:-40px;">
+        <form method="get" action="{% url 'carlisting:car_list' %}" class="hero-search p-4 row g-3 align-items-center">
+            <div class="col-md-4">
+                <div class="fw-bold small text-uppercase text-muted">Buscar en inventario</div>
+                <div class="small text-muted">Encontrá tu próximo vehículo</div>
+            </div>
+            <div class="col-md-6">
+                <input type="text" name="q" class="form-control form-control-lg border-0 bg-light" placeholder="Ej. Corolla 2020">
+            </div>
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-myr-yellow btn-lg w-100"><i class="bi bi-search"></i> Buscar</button>
+            </div>
+        </form>
     </div>
 </section>
 
-<section class="container py-5">
-    <h2 class="mb-4">Featured Vehicles</h2>
+<section class="container" style="padding-top:90px;padding-bottom:4rem;">
+    <div class="d-flex justify-content-between align-items-end flex-wrap mb-4">
+        <div>
+            <p class="section-eyebrow">INVENTARIO DESTACADO</p>
+            <h2>Vehículos seleccionados por Autos MYR</h2>
+            <p class="text-muted" style="max-width:520px;">Una selección de unidades disponibles para que encontrés más rápido el vehículo que estás buscando.</p>
+        </div>
+        <a href="{% url 'carlisting:car_list' %}" class="fw-bold text-dark text-decoration-none">Ver todo el inventario <i class="bi bi-arrow-right"></i></a>
+    </div>
+
     <div class="row g-4">
         {% for car in featured_cars %}
         <div class="col-md-4">
-            <div class="card h-100 shadow-sm">
+            <div class="card car-card">
                 {% if car.primary_image %}
-                <img src="{{ car.primary_image.image.url }}" class="card-img-top" alt="{{ car }}" style="height:200px;object-fit:cover;">
+                <img src="{{ car.primary_image.image.url }}" class="car-card__img" alt="{{ car }}">
                 {% else %}
-                <div class="bg-secondary text-white d-flex align-items-center justify-content-center" style="height:200px;">No Image</div>
+                <div class="car-card__img d-flex align-items-center justify-content-center text-muted">Sin imagen</div>
                 {% endif %}
                 <div class="card-body">
-                    <h5 class="card-title">{{ car }}</h5>
-                    <p class="card-text text-muted">{{ car.mileage }} km &middot; {{ car.get_transmission_display }}</p>
-                    <p class="fw-bold text-success">${{ car.price|floatformat:0 }}</p>
-                    <a href="{% url 'carlisting:car_detail' car.pk %}" class="btn btn-outline-dark btn-sm">View Details</a>
+                    <div class="d-flex justify-content-between small text-muted mb-1">
+                        <span>{{ car.year }}</span>
+                        <span><i class="bi bi-geo-alt"></i> San Sebastián</span>
+                    </div>
+                    <h5 class="card-title mb-1">{{ car.brand }} {{ car.model_name }}</h5>
+                    <p class="text-muted small mb-0">{{ car.brand }} {{ car.model_name }} {{ car.year }} {{ car.get_transmission_display }}</p>
+                    <div class="car-card__specs d-flex justify-content-between">
+                        <span><i class="bi bi-speedometer2"></i> {{ car.mileage }} km</span>
+                        <span><i class="bi bi-gear"></i> {{ car.get_transmission_display }}</span>
+                        <span><i class="bi bi-fuel-pump"></i> {{ car.get_fuel_type_display }}</span>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center mt-3">
+                        <span class="car-card__price">${{ car.price|floatformat:0 }}</span>
+                        <a href="{% url 'carlisting:car_detail' car.pk %}" class="fw-bold text-dark text-decoration-none small">Ver vehículo <i class="bi bi-arrow-right"></i></a>
+                    </div>
                 </div>
             </div>
         </div>
         {% empty %}
-        <p class="text-muted">No cars listed yet. Check back soon!</p>
+        <div class="col-12 text-center text-muted py-5">
+            <i class="bi bi-car-front display-4 d-block mb-3"></i>
+            No hay vehículos publicados todavía. ¡Volvé pronto!
+        </div>
         {% endfor %}
+    </div>
+</section>
+
+<section class="section-dark py-5">
+    <div class="container py-4">
+        <p class="section-eyebrow">TODO EN UN SOLO LUGAR</p>
+        <h2 class="mb-3">Todo lo que necesitás para elegir<br>tu próximo vehículo</h2>
+        <p class="text-secondary mb-5" style="max-width:560px;">Explorá el inventario, consultá opciones de financiamiento, encontrá nuestra ubicación y contactanos de forma directa.</p>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="p-4 rounded-4 h-100" style="background:#1e1e1e;">
+                    <div class="text-warning small fw-bold text-uppercase mb-2">Inventario</div>
+                    <h4>Vehículos disponibles</h4>
+                    <a href="{% url 'carlisting:car_list' %}" class="text-white text-decoration-none fw-bold">Explorar <i class="bi bi-arrow-right"></i></a>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="p-4 rounded-4 h-100" style="background:#1e1e1e;">
+                    <div class="text-warning small fw-bold text-uppercase mb-2">Contacto</div>
+                    <h4>Hablá con un asesor</h4>
+                    <a href="{% url 'carlisting:contact' %}" class="text-white text-decoration-none fw-bold">Contactar <i class="bi bi-arrow-right"></i></a>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="p-4 rounded-4 h-100" style="background:#1e1e1e;">
+                    <div class="text-warning small fw-bold text-uppercase mb-2">Ubicación</div>
+                    <h4>San Sebastián, San José</h4>
+                    <a href="tel:+50622271818" class="text-white text-decoration-none fw-bold">Llamar <i class="bi bi-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="container py-5">
+    <div class="row align-items-center g-5">
+        <div class="col-lg-5 position-relative">
+            <div class="rounded-4 overflow-hidden" style="height:420px;background:#e9ecef;">
+                <div class="d-flex h-100 align-items-center justify-content-center text-muted">
+                    <i class="bi bi-car-front-fill display-1"></i>
+                </div>
+            </div>
+            <div class="bg-white rounded-4 shadow p-3 position-absolute" style="bottom:20px;left:20px;">
+                <div class="fw-bold">15+ años</div>
+                <div class="small text-muted">de trayectoria</div>
+            </div>
+        </div>
+        <div class="col-lg-7">
+            <p class="section-eyebrow">AUTOS MYR</p>
+            <h2 class="mb-3">Una experiencia más simple para encontrar tu próximo vehículo</h2>
+            <p class="text-muted mb-4">Reunimos inventario, información de cada unidad, financiamiento y contacto para que tengás todo lo necesario en un mismo lugar.</p>
+            <div class="d-flex flex-column gap-3">
+                <div class="feature-list-item d-flex align-items-start gap-3">
+                    <span class="feature-icon"><i class="bi bi-car-front"></i></span>
+                    <div>
+                        <div class="fw-bold">Inventario actualizado</div>
+                        <div class="small text-muted">Consultá las unidades disponibles y sus principales características.</div>
+                    </div>
+                </div>
+                <div class="feature-list-item d-flex align-items-start gap-3">
+                    <span class="feature-icon"><i class="bi bi-credit-card"></i></span>
+                    <div>
+                        <div class="fw-bold">Opciones de financiamiento</div>
+                        <div class="small text-muted">Enviá tu solicitud y recibí atención personalizada.</div>
+                    </div>
+                </div>
+                <div class="feature-list-item d-flex align-items-start gap-3">
+                    <span class="feature-icon"><i class="bi bi-whatsapp"></i></span>
+                    <div>
+                        <div class="fw-bold">WhatsApp directo</div>
+                        <div class="small text-muted">Hablá con Autos MYR cuando necesités resolver una consulta.</div>
+                    </div>
+                </div>
+            </div>
+            <a href="{% url 'carlisting:contact' %}" class="btn btn-myr-dark mt-4">Conocer Autos MYR <i class="bi bi-arrow-right"></i></a>
+        </div>
+    </div>
+</section>
+
+<section class="cta-band py-5">
+    <div class="container d-flex justify-content-between align-items-center flex-wrap gap-3">
+        <div>
+            <div class="small fw-bold text-uppercase">Donde lo hacemos posible</div>
+            <h3 class="mb-0">Encontrá tu próximo vehículo en Autos MYR.</h3>
+        </div>
+        <a href="{% url 'carlisting:car_list' %}" class="btn btn-myr-dark">Explorar inventario <i class="bi bi-arrow-right"></i></a>
     </div>
 </section>
 {% endblock %}

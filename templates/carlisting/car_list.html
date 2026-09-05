@@ -1,76 +1,123 @@
 {% extends "base.html" %}
-{% block title %}Inventory | Car Sales{% endblock %}
+{% block title %}Inventario de vehículos | Autos MYR{% endblock %}
 
 {% block content %}
-<div class="container py-5">
-    <h1 class="mb-4">Our Inventory</h1>
+<section class="hero" style="min-height:260px;">
+    <div class="container py-5">
+        <p class="hero__eyebrow">INVENTARIO</p>
+        <h1 class="mb-3">Encontrá el vehículo correcto</h1>
+        <p class="text-white-50" style="max-width:560px;">
+            Filtrá las unidades disponibles por marca, categoría, año, precio, combustible y transmisión.
+        </p>
+    </div>
+</section>
 
-    <form method="get" class="row g-2 mb-4 align-items-end">
-        <div class="col-md-3">
-            <label class="form-label">Brand</label>
-            <select name="brand" class="form-select">
-                <option value="">All</option>
-                {% for brand in brands %}
-                <option value="{{ brand.id }}" {% if request_get.brand == brand.id|stringformat:"s" %}selected{% endif %}>{{ brand.name }}</option>
-                {% endfor %}
-            </select>
-        </div>
-        <div class="col-md-3">
-            <label class="form-label">Body Type</label>
-            <select name="body_type" class="form-select">
-                <option value="">All</option>
-                {% for value, label in body_types %}
-                <option value="{{ value }}" {% if request_get.body_type == value %}selected{% endif %}>{{ label }}</option>
-                {% endfor %}
-            </select>
-        </div>
-        <div class="col-md-2">
-            <label class="form-label">Min Price</label>
-            <input type="number" name="min_price" class="form-control" value="{{ request_get.min_price }}">
-        </div>
-        <div class="col-md-2">
-            <label class="form-label">Max Price</label>
-            <input type="number" name="max_price" class="form-control" value="{{ request_get.max_price }}">
-        </div>
-        <div class="col-md-2">
-            <button class="btn btn-dark w-100" type="submit">Filter</button>
-        </div>
-    </form>
-
+<section class="container py-5">
     <div class="row g-4">
-        {% for car in page_obj %}
-        <div class="col-md-4">
-            <div class="card h-100 shadow-sm">
-                {% if car.primary_image %}
-                <img src="{{ car.primary_image.image.url }}" class="card-img-top" alt="{{ car }}" style="height:200px;object-fit:cover;">
-                {% else %}
-                <div class="bg-secondary text-white d-flex align-items-center justify-content-center" style="height:200px;">No Image</div>
-                {% endif %}
-                <div class="card-body">
-                    <h5 class="card-title">{{ car }}</h5>
-                    <p class="card-text text-muted">{{ car.mileage }} km &middot; {{ car.get_transmission_display }} &middot; {{ car.get_body_type_display }}</p>
-                    <p class="fw-bold text-success">${{ car.price|floatformat:0 }}</p>
-                    <a href="{% url 'carlisting:car_detail' car.pk %}" class="btn btn-outline-dark btn-sm">View Details</a>
+        <aside class="col-lg-3">
+            <form method="get" class="p-4 rounded-4 shadow-sm bg-white border">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h6 class="fw-bold mb-0"><i class="bi bi-sliders"></i> Filtrar inventario</h6>
+                    <a href="{% url 'carlisting:car_list' %}" class="small text-decoration-none">Limpiar</a>
+                </div>
+                <div class="mb-3">
+                    <input type="text" name="q" class="form-control" placeholder="Marca, modelo o año" value="{{ request_get.q }}">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label small fw-bold">Marca</label>
+                    <select name="brand" class="form-select">
+                        <option value="">Todas</option>
+                        {% for brand in brands %}
+                        <option value="{{ brand.id }}" {% if request_get.brand == brand.id|stringformat:"s" %}selected{% endif %}>{{ brand.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label small fw-bold">Categoría</label>
+                    <select name="body_type" class="form-select">
+                        <option value="">Todas</option>
+                        {% for value, label in body_types %}
+                        <option value="{{ value }}" {% if request_get.body_type == value %}selected{% endif %}>{{ label }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="row g-2 mb-3">
+                    <div class="col-6">
+                        <label class="form-label small fw-bold">Precio mín.</label>
+                        <input type="number" name="min_price" class="form-control" value="{{ request_get.min_price }}">
+                    </div>
+                    <div class="col-6">
+                        <label class="form-label small fw-bold">Precio máx.</label>
+                        <input type="number" name="max_price" class="form-control" value="{{ request_get.max_price }}">
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-myr-yellow w-100">Filtrar</button>
+                <hr>
+                <div class="small text-muted">
+                    <strong class="d-block text-dark">Ubicación</strong>
+                    Autos MYR · San Sebastián, San José
+                </div>
+            </form>
+        </aside>
+
+        <div class="col-lg-9">
+            <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+                <div>
+                    <div class="fw-bold fs-5">{{ page_obj.paginator.count }} resultado{{ page_obj.paginator.count|pluralize }}</div>
+                    <div class="small text-muted">Inventario actualizado por Autos MYR</div>
                 </div>
             </div>
-        </div>
-        {% empty %}
-        <p class="text-muted">No vehicles match your filters.</p>
-        {% endfor %}
-    </div>
 
-    {% if page_obj.has_other_pages %}
-    <nav class="mt-4">
-        <ul class="pagination justify-content-center">
-            {% if page_obj.has_previous %}
-            <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a></li>
+            <div class="row g-4">
+                {% for car in page_obj %}
+                <div class="col-md-6 col-xl-4">
+                    <div class="card car-card">
+                        {% if car.primary_image %}
+                        <img src="{{ car.primary_image.image.url }}" class="car-card__img" alt="{{ car }}">
+                        {% else %}
+                        <div class="car-card__img d-flex align-items-center justify-content-center text-muted">Sin imagen</div>
+                        {% endif %}
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between small text-muted mb-1">
+                                <span>{{ car.year }}</span>
+                                <span><i class="bi bi-geo-alt"></i> San Sebastián</span>
+                            </div>
+                            <h5 class="card-title mb-1">{{ car.brand }} {{ car.model_name }}</h5>
+                            <p class="text-muted small mb-0">{{ car.get_body_type_display }} &middot; {{ car.get_transmission_display }}</p>
+                            <div class="car-card__specs d-flex justify-content-between">
+                                <span><i class="bi bi-speedometer2"></i> {{ car.mileage }} km</span>
+                                <span><i class="bi bi-gear"></i> {{ car.get_transmission_display }}</span>
+                                <span><i class="bi bi-fuel-pump"></i> {{ car.get_fuel_type_display }}</span>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center mt-3">
+                                <span class="car-card__price">${{ car.price|floatformat:0 }}</span>
+                                <a href="{% url 'carlisting:car_detail' car.pk %}" class="fw-bold text-dark text-decoration-none small">Ver vehículo <i class="bi bi-arrow-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                <div class="col-12 text-center text-muted py-5">
+                    <i class="bi bi-emoji-frown display-4 d-block mb-3"></i>
+                    Ningún vehículo coincide con tus filtros.
+                </div>
+                {% endfor %}
+            </div>
+
+            {% if page_obj.has_other_pages %}
+            <nav class="mt-5">
+                <ul class="pagination justify-content-center">
+                    {% if page_obj.has_previous %}
+                    <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">Anterior</a></li>
+                    {% endif %}
+                    <li class="page-item disabled"><span class="page-link">Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}</span></li>
+                    {% if page_obj.has_next %}
+                    <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">Siguiente</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
             {% endif %}
-            <li class="page-item disabled"><span class="page-link">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span></li>
-            {% if page_obj.has_next %}
-            <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a></li>
-            {% endif %}
-        </ul>
-    </nav>
-    {% endif %}
-</div>
+        </div>
+    </div>
+</section>
 {% endblock %}

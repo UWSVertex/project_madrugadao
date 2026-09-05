@@ -1,16 +1,32 @@
 {% extends "base.html" %}
-{% block title %}{{ car }} | Car Sales{% endblock %}
+{% block title %}{{ car }} | Autos MYR{% endblock %}
 
 {% block content %}
 <div class="container py-5">
+    <a href="{% url 'carlisting:car_list' %}" class="text-decoration-none text-muted small d-inline-block mb-3">
+        <i class="bi bi-arrow-left"></i> Volver al inventario
+    </a>
+
+    <div class="mb-3">
+        <span class="badge bg-light text-dark border me-1">{{ car.year }}</span>
+        {% if car.is_available %}
+        <span class="badge badge-myr me-1">DISPONIBLE</span>
+        {% else %}
+        <span class="badge bg-secondary me-1">NO DISPONIBLE</span>
+        {% endif %}
+        <span class="badge bg-light text-dark border"><i class="bi bi-geo-alt"></i> San Sebastián</span>
+    </div>
+    <h1>{{ car.brand }} {{ car.model_name }}</h1>
+    <p class="text-muted mb-4">{{ car.get_body_type_display }} &middot; {{ car.get_transmission_display }}</p>
+
     <div class="row g-4">
-        <div class="col-md-6">
+        <div class="col-lg-7">
             {% if car.images.all %}
-            <div id="carCarousel" class="carousel slide" data-bs-ride="carousel">
+            <div id="carCarousel" class="carousel slide rounded-4 overflow-hidden" data-bs-ride="carousel">
                 <div class="carousel-inner">
                     {% for image in car.images.all %}
                     <div class="carousel-item {% if forloop.first %}active{% endif %}">
-                        <img src="{{ image.image.url }}" class="d-block w-100" style="height:400px;object-fit:cover;" alt="{{ car }}">
+                        <img src="{{ image.image.url }}" class="d-block w-100" style="height:420px;object-fit:cover;" alt="{{ car }}">
                     </div>
                     {% endfor %}
                 </div>
@@ -24,33 +40,73 @@
                 {% endif %}
             </div>
             {% else %}
-            <div class="bg-secondary text-white d-flex align-items-center justify-content-center" style="height:400px;">No Image</div>
-            {% endif %}
-        </div>
-        <div class="col-md-6">
-            <h1>{{ car }}</h1>
-            <p class="fs-3 text-success fw-bold">${{ car.price|floatformat:0 }}</p>
-            <ul class="list-group list-group-flush mb-4">
-                <li class="list-group-item"><strong>Mileage:</strong> {{ car.mileage }} km</li>
-                <li class="list-group-item"><strong>Fuel:</strong> {{ car.get_fuel_type_display }}</li>
-                <li class="list-group-item"><strong>Transmission:</strong> {{ car.get_transmission_display }}</li>
-                <li class="list-group-item"><strong>Body Type:</strong> {{ car.get_body_type_display }}</li>
-                {% if car.color %}<li class="list-group-item"><strong>Color:</strong> {{ car.color }}</li>{% endif %}
-            </ul>
-            {% if car.description %}
-            <p>{{ car.description|linebreaks }}</p>
+            <div class="rounded-4 d-flex align-items-center justify-content-center text-muted" style="height:420px;background:#e9ecef;">
+                <i class="bi bi-car-front-fill display-1"></i>
+            </div>
             {% endif %}
 
-            <h4 class="mt-4">Interested in this car?</h4>
-            <form method="post">
-                {% csrf_token %}
-                {{ form.car }}
-                <div class="mb-3">{{ form.name }}</div>
-                <div class="mb-3">{{ form.phone }}</div>
-                <div class="mb-3">{{ form.email }}</div>
-                <div class="mb-3">{{ form.message }}</div>
-                <button type="submit" class="btn btn-dark">Send Inquiry</button>
-            </form>
+            {% if car.description %}
+            <div class="mt-4">
+                <h5 class="fw-bold">Descripción</h5>
+                <p class="text-muted">{{ car.description|linebreaks }}</p>
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="col-lg-5">
+            <div class="detail-price-card bg-white p-4">
+                <div class="fs-2 fw-bold mb-1">${{ car.price|floatformat:0 }}</div>
+                <p class="small text-muted mb-3">Precio y financiamiento sujetos a confirmación</p>
+
+                <div class="row g-2 mb-3">
+                    <div class="col-6">
+                        <div class="spec-box">
+                            <i class="bi bi-speedometer2"></i>
+                            <div class="fw-bold">{{ car.mileage }} km</div>
+                            <div class="small text-muted">Kilometraje</div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="spec-box">
+                            <i class="bi bi-gear"></i>
+                            <div class="fw-bold">{{ car.get_transmission_display }}</div>
+                            <div class="small text-muted">Transmisión</div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="spec-box">
+                            <i class="bi bi-fuel-pump"></i>
+                            <div class="fw-bold">{{ car.get_fuel_type_display }}</div>
+                            <div class="small text-muted">Combustible</div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="spec-box">
+                            <i class="bi bi-palette"></i>
+                            <div class="fw-bold">{{ car.color|default:"—" }}</div>
+                            <div class="small text-muted">Color</div>
+                        </div>
+                    </div>
+                </div>
+
+                <a href="https://wa.me/50622271818?text=Hola%2C%20me%20interesa%20el%20{{ car.brand }}%20{{ car.model_name }}"
+                   target="_blank" rel="noopener" class="btn btn-success w-100 mb-2">
+                    <i class="bi bi-whatsapp"></i> Consultar por WhatsApp
+                </a>
+
+                <hr>
+
+                <h6 class="fw-bold mb-3">¿Interesado en este vehículo?</h6>
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form.car }}
+                    <div class="mb-2">{{ form.name }}</div>
+                    <div class="mb-2">{{ form.phone }}</div>
+                    <div class="mb-2">{{ form.email }}</div>
+                    <div class="mb-2">{{ form.message }}</div>
+                    <button type="submit" class="btn btn-myr-dark w-100">Enviar consulta</button>
+                </form>
+            </div>
         </div>
     </div>
 </div>

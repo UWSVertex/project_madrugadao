@@ -1,26 +1,64 @@
 {% extends "base.html" %}
-{% block title %}Contact | Car Sales{% endblock %}
+{% block title %}Contacto y ubicación | Autos MYR{% endblock %}
 
 {% block content %}
-<div class="container py-5">
-    <h1 class="mb-4">Contact Us</h1>
+<section class="hero" style="min-height:220px;">
+    <div class="container py-5">
+        <p class="hero__eyebrow">VISÍTANOS</p>
+        <h1 class="mb-2">Ubicación, horario y contacto</h1>
+        <p class="text-white-50">Llegá a Autos MYR o coordiná tu visita por WhatsApp.</p>
+    </div>
+</section>
+
+<section class="container py-5">
     <div class="row g-4">
-        <div class="col-md-6">
-            <p><i class="bi bi-geo-alt"></i> 123 Main Street, Your City</p>
-            <p><i class="bi bi-telephone"></i> (555) 123-4567</p>
-            <p><i class="bi bi-clock"></i> Mon-Sat 8:00 AM - 6:00 PM</p>
+        <div class="col-lg-5">
+            <div class="p-4 rounded-4 border h-100">
+                <h5 class="fw-bold mb-4">Agencia Autos MYR — San Sebastián</h5>
+                <div class="d-flex gap-3 mb-3">
+                    <span class="feature-icon"><i class="bi bi-geo-alt"></i></span>
+                    <div>
+                        <div class="fw-bold small text-uppercase text-muted">Dirección</div>
+                        <div>Ruta 214 / Calle 12<br>San Sebastián, San José</div>
+                    </div>
+                </div>
+                <div class="d-flex gap-3 mb-3">
+                    <span class="feature-icon"><i class="bi bi-clock"></i></span>
+                    <div>
+                        <div class="fw-bold small text-uppercase text-muted">Horario</div>
+                        <div>L–S 8:00 a. m. – 6:00 p. m.</div>
+                    </div>
+                </div>
+                <div class="d-flex gap-3 mb-4">
+                    <span class="feature-icon"><i class="bi bi-telephone"></i></span>
+                    <div>
+                        <div class="fw-bold small text-uppercase text-muted">Contacto</div>
+                        <div><a href="tel:+50622271818" class="text-dark text-decoration-none">2227-1818</a></div>
+                    </div>
+                </div>
+                <a href="https://www.google.com/maps?q=9.9136819,-84.0848588" target="_blank" rel="noopener" class="btn btn-myr-dark me-2">
+                    <i class="bi bi-map"></i> Google Maps
+                </a>
+                <a href="https://wa.me/50622271818" target="_blank" rel="noopener" class="btn btn-outline-dark">
+                    <i class="bi bi-whatsapp"></i> WhatsApp
+                </a>
+            </div>
         </div>
-        <div class="col-md-6">
-            <form method="post">
-                {% csrf_token %}
-                {{ form.car }}
-                <div class="mb-3">{{ form.name }}</div>
-                <div class="mb-3">{{ form.phone }}</div>
-                <div class="mb-3">{{ form.email }}</div>
-                <div class="mb-3">{{ form.message }}</div>
-                <button type="submit" class="btn btn-dark">Send Message</button>
-            </form>
+
+        <div class="col-lg-7">
+            <div class="p-4 rounded-4 border h-100">
+                <h5 class="fw-bold mb-4">Formulario de contacto</h5>
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form.car }}
+                    <div class="mb-3">{{ form.name }}</div>
+                    <div class="mb-3">{{ form.phone }}</div>
+                    <div class="mb-3">{{ form.email }}</div>
+                    <div class="mb-3">{{ form.message }}</div>
+                    <button type="submit" class="btn btn-myr-yellow">Enviar mensaje</button>
+                </form>
+            </div>
         </div>
     </div>
-</div>
+</section>
 {% endblock %}
