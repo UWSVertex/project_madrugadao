@@ -1,5 +1,5 @@
 :root {
-    --myr-yellow: #F9EE08;
+    --myr-accent: #7E9867;
     --myr-black: #111111;
     --myr-dark: #1a1a1a;
     --myr-gray: #6c757d;
@@ -30,7 +30,7 @@ h1, h2, h3, h4, h5, .fw-bold {
     font-weight: 600;
 }
 .topbar__phone:hover {
-    color: var(--myr-yellow);
+    color: var(--myr-accent);
 }
 .topbar__social {
     display: flex;
@@ -43,7 +43,7 @@ h1, h2, h3, h4, h5, .fw-bold {
     transition: color 0.15s ease;
 }
 .topbar__social a:hover {
-    color: var(--myr-yellow);
+    color: var(--myr-accent);
 }
 
 /* Navbar */
@@ -57,7 +57,7 @@ h1, h2, h3, h4, h5, .fw-bold {
     width: 42px;
     height: 42px;
     border-radius: 50%;
-    background: var(--myr-yellow);
+    background: var(--myr-accent);
     color: #111;
     font-weight: 800;
     font-size: 0.95rem;
@@ -81,16 +81,16 @@ h1, h2, h3, h4, h5, .fw-bold {
     color: #111 !important;
 }
 
-.btn-myr-yellow {
-    background: var(--myr-yellow);
+.btn-myr-accent {
+    background: var(--myr-accent);
     border: none;
     color: #111;
     font-weight: 700;
     border-radius: 50px;
     padding: 0.5rem 1.25rem;
 }
-.btn-myr-yellow:hover {
-    background: #e6dc00;
+.btn-myr-accent:hover {
+    background: #6c8558;
     color: #111;
 }
 .btn-myr-dark {
@@ -103,7 +103,7 @@ h1, h2, h3, h4, h5, .fw-bold {
 }
 .btn-myr-dark:hover {
     background: #000;
-    color: var(--myr-yellow);
+    color: var(--myr-accent);
 }
 
 /* Hero */
@@ -113,7 +113,7 @@ h1, h2, h3, h4, h5, .fw-bold {
     color: #fff;
 }
 .hero__eyebrow {
-    color: var(--myr-yellow);
+    color: var(--myr-accent);
     font-weight: 700;
     letter-spacing: 0.08em;
     font-size: 0.85rem;
@@ -123,7 +123,7 @@ h1, h2, h3, h4, h5, .fw-bold {
     display: inline-block;
     width: 28px;
     height: 2px;
-    background: var(--myr-yellow);
+    background: var(--myr-accent);
     margin-right: 10px;
     vertical-align: middle;
 }
@@ -132,7 +132,7 @@ h1, h2, h3, h4, h5, .fw-bold {
     line-height: 1.05;
 }
 .hero .highlight {
-    color: var(--myr-yellow);
+    color: var(--myr-accent);
 }
 .hero-search-wrap {
     position: relative;
@@ -175,14 +175,14 @@ h1, h2, h3, h4, h5, .fw-bold {
     font-size: 1.1rem;
 }
 .badge-myr {
-    background: var(--myr-yellow);
+    background: var(--myr-accent);
     color: #111;
     font-weight: 700;
 }
 
 /* Section styling */
 .section-eyebrow {
-    color: #b8ae00;
+    color: #5E724D;
     font-weight: 700;
     letter-spacing: 0.08em;
     font-size: 0.85rem;
@@ -193,9 +193,12 @@ h1, h2, h3, h4, h5, .fw-bold {
     display: inline-block;
     width: 28px;
     height: 2px;
-    background: var(--myr-yellow);
+    background: var(--myr-accent);
     margin-right: 10px;
     vertical-align: middle;
+}
+.text-myr-accent {
+    color: var(--myr-accent) !important;
 }
 .section-dark {
     background: var(--myr-black);
@@ -214,16 +217,16 @@ h1, h2, h3, h4, h5, .fw-bold {
     width: 42px;
     height: 42px;
     border-radius: 50%;
-    background: rgba(249, 238, 8, 0.15);
+    background: rgba(126, 152, 103, 0.18);
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    color: #7a7300;
+    color: #445539;
 }
 
 /* CTA band */
 .cta-band {
-    background: var(--myr-yellow);
+    background: var(--myr-accent);
 }
 
 /* Footer */
@@ -239,7 +242,7 @@ h1, h2, h3, h4, h5, .fw-bold {
     font-size: 0.9rem;
 }
 .footer-links a:hover {
-    color: var(--myr-yellow);
+    color: var(--myr-accent);
 }
 .footer-social {
     display: flex;
@@ -260,8 +263,8 @@ h1, h2, h3, h4, h5, .fw-bold {
     transition: all 0.15s ease;
 }
 .footer-social a:hover {
-    background: var(--myr-yellow);
-    border-color: var(--myr-yellow);
+    background: var(--myr-accent);
+    border-color: var(--myr-accent);
     color: var(--myr-black);
 }
 

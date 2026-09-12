@@ -78,3 +78,56 @@ Check off each item as it is completed.
 - [ ] Final content review (real car listings, prices, images)
 - [ ] Final QA pass on all pages/devices
 - [ ] Launch 🎉
+
+## Phase 9 — Custom Staff Administration Panel
+A fully custom, branded staff dashboard at `/panel/` (separate from Django's
+built-in `/admin/`, which still exists and works but isn't linked publicly).
+- [x] `carlisting/forms.py` — `CarBrandForm`, `CarListingForm`, `CarImageForm`,
+      `CarImageFormSet` (inline formset, extra=3, can_delete=True, multi-photo upload)
+- [x] `carlisting/panel_urls.py` (`app_name='panel'`) — login, logout, dashboard,
+      cars (list/new/edit/delete), brands (list/delete), inquiries (list/toggle)
+- [x] Panel views in `carlisting/views.py`, all gated with
+      `@login_required(login_url='panel:login')` + `@user_passes_test(is_staff_user)`
+- [x] `LOGIN_URL` / `LOGIN_REDIRECT_URL` / `LOGOUT_REDIRECT_URL` configured in settings
+- [x] `templates/panel/` — `base.html` (sidebar layout), `login.html`, `dashboard.html`,
+      `car_list.html`, `car_form.html` (multi-image upload), `car_confirm_delete.html`,
+      `brand_list.html`, `inquiry_list.html`
+- [x] `static/css/panel.css` — dark sidebar, stat cards, table cards, login card,
+      styled to visually match the public site's branding
+- [x] "Panel" link intentionally **not** shown in the public navbar (security —
+      staff must navigate to `/panel/login/` directly)
+- [x] Verified end-to-end: login → add brand → add car listing with photo upload →
+      appears correctly on public inventory page → edit/delete → dashboard stats update
+- [x] Local dev superuser: username `admin` / password `admin12345`
+      (⚠️ change before any real/production use — `python manage.py changepassword admin`)
+
+## Phase 10 — Design Iterations & Branding Updates
+Ongoing refinements made after the initial Autos MYR redesign, based on user feedback.
+- [x] Removed all Render deployment leftovers (`build.sh`, `Procfile`, `render.yaml`,
+      whitenoise/gunicorn/dj-database-url/psycopg2 deps, production security block) —
+      project intentionally runs locally only
+- [x] Added Facebook / Instagram / TikTok social icons to the topbar and footer
+      (`.topbar__social`, `.footer-social` in `static/css/style.css`)
+- [x] Fixed the home page hero search card — originally used a negative-margin
+      "floating card" overlap trick that clipped/was covered by the section below;
+      redesigned so the search card sits fully inside the dark hero section with its
+      own padding, and the next section starts cleanly with normal spacing
+- [x] Replaced the "Conocer Autos MYR" about/feature-list section on the home page
+      with a simple contact form (name, phone, email, message) that reuses the
+      existing `InquiryForm`/`Inquiry` model — submissions appear in the panel's
+      "Consultas" list alongside per-car inquiries
+- [x] **Rebranded accent color** from yellow (`#F9EE08`) to sage green **`#7E9867`**
+      (RGB 126, 152, 103) across the entire site and panel:
+      - Renamed CSS variable `--myr-yellow` → `--myr-accent` in `static/css/style.css`
+        and `static/css/panel.css`
+      - Renamed `.btn-myr-yellow` → `.btn-myr-accent` across all templates
+      - Added `.text-myr-accent` utility class, replacing Bootstrap's `text-warning`
+        usages on the home page (feature icons, footer column labels) so the accent
+        matches exactly instead of relying on Bootstrap's default amber
+      - Adjusted derived shades for contrast/hover states: darker hover green
+        (`#6c8558`), dark-green text-on-white for `.section-eyebrow` (`#5E724D`),
+        dark-green icon fill for `.feature-icon`/`.stat-icon` (`#445539` on a
+        `rgba(126, 152, 103, …)` tint background)
+      - Updated `<meta name="theme-color">` in `templates/base.html`
+      - Verified visually across home page (hero, CTA band, footer, buttons) and
+        the staff panel (login button, active sidebar nav, stat card icons)

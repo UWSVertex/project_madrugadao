@@ -13,7 +13,7 @@
                     y hablá directamente con un asesor.
                 </p>
                 <div class="d-flex gap-3 flex-wrap">
-                    <a href="{% url 'carlisting:car_list' %}" class="btn btn-myr-yellow btn-lg">
+                    <a href="{% url 'carlisting:car_list' %}" class="btn btn-myr-accent btn-lg">
                         Ver inventario <i class="bi bi-arrow-right"></i>
                     </a>
                     <a href="https://wa.me/50622271818" target="_blank" rel="noopener" class="btn btn-outline-light btn-lg">
@@ -21,9 +21,9 @@
                     </a>
                 </div>
                 <div class="d-flex gap-4 flex-wrap mt-4 small text-white-50">
-                    <span><i class="bi bi-patch-check text-warning"></i> Trayectoria</span>
-                    <span><i class="bi bi-credit-card text-warning"></i> Financiamiento</span>
-                    <span><i class="bi bi-car-front text-warning"></i> Inventario actualizado</span>
+                    <span><i class="bi bi-patch-check text-myr-accent"></i> Trayectoria</span>
+                    <span><i class="bi bi-credit-card text-myr-accent"></i> Financiamiento</span>
+                    <span><i class="bi bi-car-front text-myr-accent"></i> Inventario actualizado</span>
                 </div>
             </div>
         </div>
@@ -39,7 +39,7 @@
                 <input type="text" name="q" class="form-control form-control-lg border-0 bg-light" placeholder="Ej. Corolla 2020">
             </div>
             <div class="col-md-2">
-                <button type="submit" class="btn btn-myr-yellow btn-lg w-100"><i class="bi bi-search"></i> Buscar</button>
+                <button type="submit" class="btn btn-myr-accent btn-lg w-100"><i class="bi bi-search"></i> Buscar</button>
             </div>
         </form>
     </div>
@@ -100,21 +100,21 @@
         <div class="row g-4">
             <div class="col-md-4">
                 <div class="p-4 rounded-4 h-100" style="background:#1e1e1e;">
-                    <div class="text-warning small fw-bold text-uppercase mb-2">Inventario</div>
+                    <div class="text-myr-accent small fw-bold text-uppercase mb-2">Inventario</div>
                     <h4>Vehículos disponibles</h4>
                     <a href="{% url 'carlisting:car_list' %}" class="text-white text-decoration-none fw-bold">Explorar <i class="bi bi-arrow-right"></i></a>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="p-4 rounded-4 h-100" style="background:#1e1e1e;">
-                    <div class="text-warning small fw-bold text-uppercase mb-2">Contacto</div>
+                    <div class="text-myr-accent small fw-bold text-uppercase mb-2">Contacto</div>
                     <h4>Hablá con un asesor</h4>
                     <a href="{% url 'carlisting:contact' %}" class="text-white text-decoration-none fw-bold">Contactar <i class="bi bi-arrow-right"></i></a>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="p-4 rounded-4 h-100" style="background:#1e1e1e;">
-                    <div class="text-warning small fw-bold text-uppercase mb-2">Ubicación</div>
+                    <div class="text-myr-accent small fw-bold text-uppercase mb-2">Ubicación</div>
                     <h4>San Sebastián, San José</h4>
                     <a href="tel:+50622271818" class="text-white text-decoration-none fw-bold">Llamar <i class="bi bi-arrow-right"></i></a>
                 </div>
@@ -141,7 +141,7 @@
                         <div class="col-12">{{ form.email }}</div>
                         <div class="col-12">{{ form.message }}</div>
                     </div>
-                    <button type="submit" class="btn btn-myr-yellow btn-lg mt-4">Enviar mensaje</button>
+                    <button type="submit" class="btn btn-myr-accent btn-lg mt-4">Enviar mensaje</button>
                 </form>
             </div>
         </div>
