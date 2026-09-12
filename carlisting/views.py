@@ -12,7 +12,20 @@ def home(request):
     featured_cars = CarListing.objects.filter(is_available=True, is_featured=True)[:6]
     if not featured_cars:
         featured_cars = CarListing.objects.filter(is_available=True)[:6]
-    return render(request, 'carlisting/home.html', {'featured_cars': featured_cars})
+
+    if request.method == 'POST':
+        form = InquiryForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Gracias! Recibimos tu mensaje, te contactaremos pronto.')
+            return redirect('carlisting:home')
+    else:
+        form = InquiryForm()
+
+    return render(request, 'carlisting/home.html', {
+        'featured_cars': featured_cars,
+        'form': form,
+    })
 
 
 def car_list(request):

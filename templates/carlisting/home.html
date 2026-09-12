@@ -124,46 +124,26 @@
 </section>
 
 <section class="container py-5">
-    <div class="row align-items-center g-5">
-        <div class="col-lg-5 position-relative">
-            <div class="rounded-4 overflow-hidden" style="height:420px;background:#e9ecef;">
-                <div class="d-flex h-100 align-items-center justify-content-center text-muted">
-                    <i class="bi bi-car-front-fill display-1"></i>
-                </div>
-            </div>
-            <div class="bg-white rounded-4 shadow p-3 position-absolute" style="bottom:20px;left:20px;">
-                <div class="fw-bold">15+ años</div>
-                <div class="small text-muted">de trayectoria</div>
-            </div>
+    <div class="row justify-content-center">
+        <div class="col-lg-8 text-center mb-4">
+            <p class="section-eyebrow">CONTACTANOS</p>
+            <h2 class="mb-3">¿Tenés alguna consulta?</h2>
+            <p class="text-muted">Dejanos tus datos y un asesor de Autos MYR te va a contactar a la brevedad.</p>
         </div>
-        <div class="col-lg-7">
-            <p class="section-eyebrow">AUTOS MYR</p>
-            <h2 class="mb-3">Una experiencia más simple para encontrar tu próximo vehículo</h2>
-            <p class="text-muted mb-4">Reunimos inventario, información de cada unidad, financiamiento y contacto para que tengás todo lo necesario en un mismo lugar.</p>
-            <div class="d-flex flex-column gap-3">
-                <div class="feature-list-item d-flex align-items-start gap-3">
-                    <span class="feature-icon"><i class="bi bi-car-front"></i></span>
-                    <div>
-                        <div class="fw-bold">Inventario actualizado</div>
-                        <div class="small text-muted">Consultá las unidades disponibles y sus principales características.</div>
+        <div class="col-lg-8">
+            <div class="p-4 p-md-5 rounded-4 border">
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form.car }}
+                    <div class="row g-3">
+                        <div class="col-md-6">{{ form.name }}</div>
+                        <div class="col-md-6">{{ form.phone }}</div>
+                        <div class="col-12">{{ form.email }}</div>
+                        <div class="col-12">{{ form.message }}</div>
                     </div>
-                </div>
-                <div class="feature-list-item d-flex align-items-start gap-3">
-                    <span class="feature-icon"><i class="bi bi-credit-card"></i></span>
-                    <div>
-                        <div class="fw-bold">Opciones de financiamiento</div>
-                        <div class="small text-muted">Enviá tu solicitud y recibí atención personalizada.</div>
-                    </div>
-                </div>
-                <div class="feature-list-item d-flex align-items-start gap-3">
-                    <span class="feature-icon"><i class="bi bi-whatsapp"></i></span>
-                    <div>
-                        <div class="fw-bold">WhatsApp directo</div>
-                        <div class="small text-muted">Hablá con Autos MYR cuando necesités resolver una consulta.</div>
-                    </div>
-                </div>
+                    <button type="submit" class="btn btn-myr-yellow btn-lg mt-4">Enviar mensaje</button>
+                </form>
             </div>
-            <a href="{% url 'carlisting:contact' %}" class="btn btn-myr-dark mt-4">Conocer Autos MYR <i class="bi bi-arrow-right"></i></a>
         </div>
     </div>
 </section>
