@@ -76,6 +76,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'carlisting.context_processors.whatsapp',
             ],
         },
     },
@@ -142,3 +143,12 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_URL = 'panel:login'
 LOGIN_REDIRECT_URL = 'panel:dashboard'
 LOGOUT_REDIRECT_URL = 'panel:login'
+
+# WhatsApp numbers that sales inquiries rotate through (round-robin on the
+# frontend, see static/js/whatsapp-rotation.js). Configurable via env var as a
+# comma-separated list, e.g. WHATSAPP_NUMBERS=50670524964,50685831158,50670129971
+WHATSAPP_NUMBERS = [
+    n.strip() for n in os.environ.get(
+        'WHATSAPP_NUMBERS', '50670524964,50685831158,50670129971'
+    ).split(',') if n.strip()
+]

@@ -131,3 +131,24 @@ Ongoing refinements made after the initial Autos MYR redesign, based on user fee
       - Updated `<meta name="theme-color">` in `templates/base.html`
       - Verified visually across home page (hero, CTA band, footer, buttons) and
         the staff panel (login button, active sidebar nav, stat card icons)
+- [x] **WhatsApp sales-number rotation** — every WhatsApp touchpoint (navbar
+      button, floating FAB, hero button, contact page button, car-detail
+      "Consultar por WhatsApp" button) now rotates across 3 sales people's
+      phone numbers on each click, instead of always messaging one number:
+      - Numbers configured centrally via `WHATSAPP_NUMBERS` env var (comma
+        separated) / `settings.WHATSAPP_NUMBERS`, default
+        `50670524964,50685831158,50670129971`
+      - `carlisting/context_processors.py` exposes `WHATSAPP_NUMBERS` /
+        `WHATSAPP_NUMBERS_JSON` to every template (registered in
+        `TEMPLATES['OPTIONS']['context_processors']`)
+      - `static/js/whatsapp-rotation.js` intercepts clicks on any
+        `.whatsapp-link` element, round-robins through the numbers using a
+        `localStorage` counter (persists across page loads/visits so the
+        rotation keeps advancing), and opens `https://wa.me/<number>` (with
+        `?text=…` preserved for the car-detail inquiry link) in a new tab
+      - Icon/label/styling unchanged — only the destination number rotates;
+        each link keeps a static `href` (first number) as a no-JS fallback
+      - Verified via Playwright: 6 consecutive clicks cycle
+        `...4964 → ...1158 → ...9971 → ...4964 → …`, rotation state is shared
+        across different buttons (fab, navbar, hero), and the car-detail
+        button's pre-filled message text is correctly URL-encoded
