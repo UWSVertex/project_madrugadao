@@ -152,3 +152,8 @@ Ongoing refinements made after the initial Autos MYR redesign, based on user fee
         `...4964 → ...1158 → ...9971 → ...4964 → …`, rotation state is shared
         across different buttons (fab, navbar, hero), and the car-detail
         button's pre-filled message text is correctly URL-encoded
+
+## Phase 11 — Yellow Accent Theme
+- [x] Switched the site and staff panel accent from sage green back to yellow
+      (`#F9EE08`), including accent buttons, highlights, panel icons, success
+      badges/alerts, the WhatsApp floating button, and browser theme color.

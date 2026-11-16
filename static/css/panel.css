@@ -57,7 +57,7 @@
 }
 
 .panel-nav a.active {
-    background: var(--myr-accent, #7E9867);
+    background: var(--myr-accent, #F9EE08);
     color: #111;
     font-weight: 700;
 }
@@ -101,11 +101,11 @@
     width: 44px;
     height: 44px;
     border-radius: 12px;
-    background: rgba(126, 152, 103, 0.2);
+    background: rgba(249, 238, 8, 0.2);
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    color: #445539;
+    color: #514B00;
     font-size: 1.2rem;
 }
 

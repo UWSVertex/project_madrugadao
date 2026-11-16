@@ -1,5 +1,5 @@
 :root {
-    --myr-accent: #7E9867;
+    --myr-accent: #F9EE08;
     --myr-black: #111111;
     --myr-dark: #1a1a1a;
     --myr-gray: #6c757d;
@@ -90,7 +90,7 @@ h1, h2, h3, h4, h5, .fw-bold {
     padding: 0.5rem 1.25rem;
 }
 .btn-myr-accent:hover {
-    background: #6c8558;
+    background: #E5DA00;
     color: #111;
 }
 .btn-myr-dark {
@@ -182,7 +182,7 @@ h1, h2, h3, h4, h5, .fw-bold {
 
 /* Section styling */
 .section-eyebrow {
-    color: #5E724D;
+    color: #625D00;
     font-weight: 700;
     letter-spacing: 0.08em;
     font-size: 0.85rem;
@@ -217,11 +217,11 @@ h1, h2, h3, h4, h5, .fw-bold {
     width: 42px;
     height: 42px;
     border-radius: 50%;
-    background: rgba(126, 152, 103, 0.18);
+    background: rgba(249, 238, 8, 0.18);
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    color: #445539;
+    color: #514B00;
 }
 
 /* CTA band */
@@ -273,8 +273,8 @@ h1, h2, h3, h4, h5, .fw-bold {
     position: fixed;
     bottom: 24px;
     right: 24px;
-    background: #25D366;
-    color: #fff;
+    background: var(--myr-accent);
+    color: #111;
     width: 56px;
     height: 56px;
     border-radius: 50%;
@@ -287,8 +287,14 @@ h1, h2, h3, h4, h5, .fw-bold {
     text-decoration: none;
 }
 .whatsapp-fab:hover {
-    color: #fff;
+    color: #111;
     transform: scale(1.05);
+}
+
+.alert-success {
+    --bs-alert-color: #514B00;
+    --bs-alert-bg: #FFFBD1;
+    --bs-alert-border-color: #F0E78A;
 }
 
 /* Detail page */
