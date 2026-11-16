@@ -1,0 +1,10 @@
+services:
+  web:
+    build: .
+    command: sh -c "python manage.py migrate --noinput && python manage.py runserver 0.0.0.0:1414"
+    env_file:
+      - .env
+    ports:
+      - "1414:1414"
+    volumes:
+      - .:/app
