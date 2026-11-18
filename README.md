@@ -13,6 +13,25 @@ cp .env.example .env          # first time only
 docker compose up --build
 ```
 
+To access the site from another device on your network, add the server's IP
+address to `ALLOWED_HOSTS` in `.env`, then recreate the container with
+`docker compose up -d`.
+
+When exposing the site through an HTTPS hostname, add that hostname to
+`ALLOWED_HOSTS` and its full scheme-qualified URL to `CSRF_TRUSTED_ORIGINS`.
+For example:
+
+```dotenv
+ALLOWED_HOSTS=localhost,127.0.0.1,cardemo.trshomelabs.uk
+CSRF_TRUSTED_ORIGINS=https://cardemo.trshomelabs.uk
+```
+
+Recreate the container after changing `.env`:
+
+```bash
+docker compose up -d --force-recreate
+```
+
 Visit http://127.0.0.1:1414/ for the public site, http://127.0.0.1:1414/admin/
 for the Django admin, and http://127.0.0.1:1414/panel/ for the staff panel.
 The project directory is mounted into the container, so SQLite data and uploaded
