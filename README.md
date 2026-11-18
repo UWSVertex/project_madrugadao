@@ -43,6 +43,11 @@ docker compose exec web python manage.py createsuperuser
 
 Stop the server with `Ctrl+C`; use `docker compose down` to remove its container.
 
+The Compose stack includes Nginx on host port `1414`. It proxies application
+requests to Django while serving uploaded files from `/media/` and collected
+static files from `/static/`. Keep the Cloudflare Tunnel upstream pointed to
+`http://127.0.0.1:1414`.
+
 ## Local Development
 
 ```bash
